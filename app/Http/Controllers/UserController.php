@@ -15,7 +15,9 @@ class UserController extends Controller
      */
     public function index()
     {
-        return User::with('posts')->with('posts.comments')->get();
+        return User::with('posts')
+            ->with('posts.comments')
+            ->get();
     }
 
     /**

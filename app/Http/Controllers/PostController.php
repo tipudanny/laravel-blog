@@ -14,13 +14,16 @@ class PostController extends Controller
      */
     public function index()
     {
-        //
+        return Post::with('user')
+            ->with('comments')
+            ->with('comments.user')
+            ->get();
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function create()
     {
@@ -31,11 +34,16 @@ class PostController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function store(Request $request)
     {
-        //
+        $post = Post::create([
+            'title' => $request->title,
+            'description' => $request->description,
+            'user_id' => $request->user_id
+        ]);
+        return response()->json(['data'=>$post],201);
     }
 
     /**
