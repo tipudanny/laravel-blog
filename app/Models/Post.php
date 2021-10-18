@@ -17,7 +17,17 @@ class Post extends Model
     //Post has many comment
     public function comments()
     {
-        return $this->hasMany(Comment::class);
+        return $this->hasMany(Comment::class)->with( ['user', 'post', 'parent']);
     }
 
+    public function onlyComments()
+    {
+        return $this->comments()->whereNull('parent_id');
+       // return $this->hasMany(Comment::class)->whereNull('parent_id');
+    }
+
+    public function replies()
+    {
+        return $this->hasMany(Comment::class)->whereNotNull('parent_id');
+    }
 }

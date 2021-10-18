@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Comment extends Model
 {
     use HasFactory;
-    protected $guarded = [];
+    //protected $guarded = [];
 
     public function post()
     {
@@ -17,5 +17,20 @@ class Comment extends Model
 
     public function user() {
         return $this->belongsTo(User::class);
+    }
+
+    public function parent()
+    {
+        return $this->belongsTo(Comment::class, 'parent_id');
+    }
+
+    public function abc()
+    {
+
+    }
+
+    public static function def()
+    {
+
     }
 }

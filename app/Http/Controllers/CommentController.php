@@ -2,11 +2,22 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CommentStoreRequest;
 use App\Models\Comment;
+use App\Models\Post;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class CommentController extends Controller
 {
+    // fatty model thin controller
+
+    // DRY
+
+    // Service layer in MVC pattern
+
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +25,7 @@ class CommentController extends Controller
      */
     public function index()
     {
-        //
+
     }
 
     /**
@@ -33,9 +44,29 @@ class CommentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CommentStoreRequest $request, Post $post)
     {
-        //
+        $comment = Comment::create($request->validated());
+
+        $comment = Comment::create([
+           'body'=>$request->body,
+           'user_id' => Auth::id(),
+           'post_id' => $post->id,
+        ]);
+
+        $comment = Auth::user()->comments()->create([
+            'body'=>$request->body,
+            'post_id' => $post->id,
+        ]);
+
+        $comment = $post->comments()->create([
+            'body'=>$request->body,
+            'user_id' => Auth::id(),
+        ]);
+
+        $comment = new Comment;
+        $comment->body = $request->body;
+        $comment->save();
     }
 
     /**
