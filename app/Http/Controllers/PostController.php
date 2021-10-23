@@ -16,10 +16,10 @@ class PostController extends Controller
     public function index(Payment $payment)
     {
 //        dd($payment->credential);
-        return Post::with('user')
+        /*return Post::with('user')
             ->with('comments')
             ->with('comments.user')
-            ->get();
+            ->get();*/
         return response()->json([
             'data' => Post::with(['user','comments','comments.user'])->get()
         ]);
