@@ -2,11 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UserRegistrationRequest;
+use App\Http\Traits\Registerable;
 use App\Models\User;
+use App\Services\Payment\Facade\Payment;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
+    use Registerable;
+
     /**
      * Display a listing of the resource.
      */
@@ -31,11 +36,12 @@ class UserController extends Controller
      * Store a newly created resource in storage.
      *
      * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function store(Request $request)
+    public function store(UserRegistrationRequest $request)
     {
-        //
+        $user = $this->register($request->validated());
+        return response()->json(['data' => $user], 201);
     }
 
     /**
@@ -81,5 +87,17 @@ class UserController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function payment($id, \App\Services\Payment\Payment $payment)
+    {
+        //$payment = new Payment(['name' => 'john doe']);
+
+       Payment::setAmount(1000);
+       /* $payment->setAmount(1000);
+
+        $payment->setUser(User::find($id));
+
+        $payment->pay(500);*/
     }
 }

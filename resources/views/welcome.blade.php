@@ -6,6 +6,8 @@
 
     <title>Laravel</title>
 
+    <meta name="token" content="{{ csrf_token() }}">
+
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
 
@@ -558,10 +560,10 @@
     </div>
 </div>
 
-@foreach($users as $user)
+{{--@foreach($users as $user)
     @foreach($user->posts as $post)
         <li>{{ $post->title }} ({{ $post->user->name }})</li>
     @endforeach
-@endforeach
+@endforeach--}}
 </body>
 </html>

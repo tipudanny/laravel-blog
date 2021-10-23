@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Services\Payment\Payment;
+use Illuminate\Http\Client\Response;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -13,7 +15,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+
     }
 
     /**
@@ -23,6 +25,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        /*Response::macro('alu', function ($value) {
+            return [
+                'alu' => $value
+            ];
+        });*/
     }
 }
