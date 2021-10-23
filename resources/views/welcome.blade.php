@@ -565,5 +565,6 @@
         <li>{{ $post->title }} ({{ $post->user->name }})</li>
     @endforeach
 @endforeach--}}
+
 </body>
 </html>

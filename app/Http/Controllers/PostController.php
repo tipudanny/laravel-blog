@@ -11,15 +11,18 @@ class PostController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function index(Payment $payment)
     {
-        dd($payment->credential);
+//        dd($payment->credential);
         return Post::with('user')
             ->with('comments')
             ->with('comments.user')
             ->get();
+        return response()->json([
+            'data' => Post::with(['user','comments','comments.user'])->get()
+        ]);
     }
 
     /**
