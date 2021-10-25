@@ -2,11 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ProductStoreRequest;
+use App\Library\SendCreateMail;
+use App\Models\Product;
 use App\Repositories\ProductRepository;
 use Illuminate\Http\Request;
+use Throwable;
 
 class ProductController extends Controller
 {
+    use SendCreateMail;
     protected $productRepository;
 
     public function __construct(ProductRepository $productRepository)
@@ -40,9 +45,18 @@ class ProductController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ProductStoreRequest $request)
     {
-        //
+        try {
+            $product = Product::create( $request->validated());
+            $this->sendMail($product);
+            return response([
+                'data'      => $product
+            ],201);
+        }
+        catch (Throwable $e){
+            report($e);
+        }
     }
 
     /**

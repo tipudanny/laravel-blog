@@ -32,7 +32,7 @@ Route::resource('/post',PostController::class);
 
 Route::view('/abc', 'welcome');
 
-Route::resource('/product',ProductController::class);
+//Route::resource('/product',ProductController::class);
 
 /*Route::resource('/user',UserController::class);
 Route::resource('/post',PostController::class);
