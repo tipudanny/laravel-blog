@@ -11,4 +11,9 @@ trait SendCreateMail
         $email = 'example@mail.com';
         Mail::to($email)->send(new CreateNewProductMail($mailData));
     }
+
+    public function sendSMS()
+    {
+
+    }
 }

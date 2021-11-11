@@ -2,7 +2,8 @@
 
 namespace App\Providers;
 
-use App\Library\ProductClass;
+use App\Contracts\ProductInterface;
+use App\Repositories\CachedProductRepository;
 use App\Repositories\ProductRepository;
 use Illuminate\Support\ServiceProvider;
 
@@ -15,8 +16,12 @@ class ProductServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind(ProductRepository::class,ProductClass::class);
-
+        $this->app->bind(ProductInterface::class, function () {
+            if ($this->app->environment('local')) {
+                return new ProductRepository;
+            }
+            return new CachedProductRepository;
+        });
     }
 
     /**
